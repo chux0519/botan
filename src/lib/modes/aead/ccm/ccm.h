@@ -120,7 +120,7 @@ class BOTAN_PUBLIC_API(2,0) CCM_Decryption final : public CCM_Mode
          return input_length - tag_size();
          }
 
-      size_t minimum_final_size() const override { return tag_size(); }
+      size_t minimum_final_size() const override { return 0; }
    };
 
 }

@@ -90,7 +90,7 @@ class BOTAN_PUBLIC_API(2,0) ChaCha20Poly1305_Decryption final : public ChaCha20P
          return input_length - tag_size();
          }
 
-      size_t minimum_final_size() const override { return tag_size(); }
+      size_t minimum_final_size() const override { return 0; }
 
       size_t process(uint8_t buf[], size_t size) override;
 

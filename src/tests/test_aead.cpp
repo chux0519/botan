@@ -244,21 +244,28 @@ class AEAD_Tests final : public Text_Based_Test
                uint8_t* p = buf.data();
                Botan::secure_vector<uint8_t> block(update_granularity);
                Botan::secure_vector<uint8_t> plaintext(dec->output_length(buf.size()));
-               while((input_length > update_granularity) && ((input_length - update_granularity) >= dec->minimum_final_size()))
+               while(input_length >= update_granularity)
                   {
                   block.assign(p, p + update_granularity);
-                  dec->update(block);
+                  if(input_length - update_granularity <= 0) {
+                        dec->finish(block);
+                  } else {
+                        dec->update(block);
+                  }
+                  
                   p += update_granularity;
                   input_length -= update_granularity;
                   buffer_insert(plaintext, 0 + offset, block);
                   offset += block.size();
                   }
 
-               // decrypt remaining bytes
-               block.assign(p, p + input_length);
-               dec->finish(block);
-               buffer_insert(plaintext, 0 + offset, block);
-
+				if(input_length > 0) {
+					// decrypt remaining bytes
+					block.assign(p, p + input_length);
+					dec->finish(block);
+					buffer_insert(plaintext, 0 + offset, block);
+				}
+               
                result.test_eq("decrypt update", plaintext, expected);
                }
 

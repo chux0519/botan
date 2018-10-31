@@ -117,7 +117,7 @@ class BOTAN_PUBLIC_API(2,0) SIV_Decryption final : public SIV_Mode
          return input_length - tag_size();
          }
 
-      size_t minimum_final_size() const override { return tag_size(); }
+      size_t minimum_final_size() const override { return 0; }
    };
 
 }

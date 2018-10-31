@@ -119,7 +119,7 @@ class BOTAN_PUBLIC_API(2,0) OCB_Decryption final : public OCB_Mode
          return input_length - tag_size();
          }
 
-      size_t minimum_final_size() const override { return tag_size(); }
+      size_t minimum_final_size() const override { return 0; }
 
       size_t process(uint8_t buf[], size_t size) override;
 
